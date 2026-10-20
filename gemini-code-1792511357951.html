@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis FinTech</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-xl w-full bg-slate-800 p-8 rounded-2xl shadow-xl border border-slate-700">
+        <h1 class="text-2xl font-bold mb-4 text-center text-indigo-400">Kuis Financial Technology (FinTech)</h1>
+        <div id="quiz-container">
+            <p id="question" class="text-lg font-medium mb-6"></p>
+            <div id="options" class="space-y-3"></div>
+        </div>
+        <div id="result" class="hidden text-center">
+            <h2 class="text-2xl font-bold mb-2">Kuis Selesai!</h2>
+            <p id="score-text" class="text-lg mb-4"></p>
+            <button onclick="location.reload()" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold">Ulangi Kuis</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Apa arti dari disrupsi inovasi dalam konteks layanan keuangan?",
+                options: [
+                    "Inovasi yang merusak sistem tanpa memberikan manfaat",
+                    "Inovasi yang mentransformasi pasar melalui kemudahan akses dan efisiensi biaya",
+                    "Penggunaan mesin fisik secara manual di bank",
+                    "Penutupan seluruh bank konvensional di dunia"
+                ],
+                answer: 1
+            },
+            {
+                question: "Evolusi FinTech 1.0 (1866–1987) ditandai secara historis oleh...",
+                options: [
+                    "Pemasangan kabel telegraf transatlantik",
+                    "Kemunculan mata uang kripto Bitcoin",
+                    "Penggunaan dompet digital berbasis QRIS",
+                    "Peluncuran aplikasi pinjaman online"
+                ],
+                answer: 0
+            },
+            {
+                question: "Manakah yang termasuk ke dalam model ABCD dalam Alternative Finance?",
+                options: [
+                    "Asset, Banking, Crypto, Digital",
+                    "Artificial Intelligence, Blockchain, Cloud Computing, Data",
+                    "Automation, Big Data, Code, Distribution",
+                    "Application, Broker, Currency, Device"
+                ],
+                answer: 1
+            },
+            {
+                question: "Berdasarkan Fatwa DSN-MUI No. 117/2018, prinsip utama yang harus dihindari dalam FinTech Syariah adalah...",
+                options: [
+                    "Riba, Gharar, dan Maysir",
+                    "Penggunaan teknologi internet",
+                    "Kolaborasi dengan perbankan",
+                    "Penyimpanan data cloud"
+                ],
+                answer: 0
+            },
+            {
+                question: "Teknologi yang digunakan oleh regulator (seperti OJK) untuk mengawasi industri keuangan digital disebut...",
+                options: [
+                    "RegTech",
+                    "SupTech",
+                    "Fintech 3.0",
+                    "Robo-Advisor"
+                ],
+                answer: 1
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuiz() {
+            if (currentQuestion < questions.length) {
+                const q = questions[currentQuestion];
+                document.getElementById("question").innerText = `${currentQuestion + 1}. ${q.question}`;
+                const optionsDiv = document.getElementById("options");
+                optionsDiv.innerHTML = "";
+                q.options.forEach((opt, index) => {
+                    const btn = document.createElement("button");
+                    btn.className = "w-full text-left p-3 rounded-xl bg-slate-700/50 hover:bg-indigo-600 transition border border-slate-600";
+                    btn.innerText = opt;
+                    btn.onclick = () => selectOption(index);
+                    optionsDiv.appendChild(btn);
+                });
+            } else {
+                document.getElementById("quiz-container").classList.add("hidden");
+                document.getElementById("result").classList.remove("hidden");
+                document.getElementById("score-text").innerText = `Skor Anda: ${score} dari ${questions.length}`;
+            }
+        }
+
+        function selectOption(index) {
+            if (index === questions[currentQuestion].answer) {
+                score++;
+            }
+            currentQuestion++;
+            loadQuiz();
+        }
+
+        loadQuiz();
+    </script>
+</body>
+</html>
